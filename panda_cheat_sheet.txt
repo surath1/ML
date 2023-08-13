@@ -1,0 +1,176 @@
+import pandas as pd
+import numpy as np
+people = {
+	"first":['hari','shyam1','',np.nan,'NA'],
+	"last":['papa','nana','',np.nan, 'NA'],
+	"phone":[1432,17272,0,np.nan,'NA'],
+	"email":['fbc@gmail.com','aod@gmail.com','',np.nan,'NA'],
+	"Date": ['2020-03-13 08-PM','2020-05-10 08-PM']
+}
+
+df = pd.DataFrame(people)
+
+df = pd.read_csv("D:\python-coding\data\survey_2022\survey_results_public.csv")
+df.set_option('display.max_columns',100)
+df.set_option('display.max_rows',80)
+
+df.shape
+df.columns
+df.head()
+df.info()
+
+df['hobiest'].value_counts()
+
+df['email'] / df.email
+df[['email','id']] 
+df.iloc[0]
+df.iloc[[0.1]]
+df.loc[0]
+df.loc[ 0:2, 'hobbiest']
+df.loc[ 0:2, 'hobiest' : 'employ']
+df.set_index('email')
+df.index
+df.set_index('email', inplace = True )
+df.loc['a.com']
+df.loc['a.com', 'last']
+df.reset_index(inplace = True )
+
+df = pd.read_csv('', index_col = 'respondant')
+df.loc['QuestionText']
+df.sort_index()
+df.sort_index(ascending = False)
+
+filt = (df['email'] == 'abc@gmail.com')
+df[filt]
+df.loc[filt]
+df.loc[filt,'email']
+filt = ((df['first'] == 'ram') & (df['last'] == 'god' )) ==> & | operatort 
+filt = ((df['first'] == 'ram') | (df['last'] == 'god' )) 
+df.loc[filt,'email']
+df.loc[-filt,'email']
+country=['united','india','uk']
+filt = df['country'].isin(country)
+df.loc[filt,'country']
+df['language'].str.contains('python', na=false)
+------
+df.columns 
+df.columns = ['first_name','last_name','email']
+df.columns
+df.columns = [x.upper() for x in df.columns ]
+df.columns = df.columns.str.replace(' ','')
+df.rename( columns={'first_name':'first','last_name':'last'},inplace=True)
+df.loc[2,'last'] = 'hari'
+df.at[2,'last'] = 'hari'
+
+df['first'] +' '+ df['last']
+df['full_name'] = df['first'] + df['last']
+df.drop(columns=['first'])
+df.drop(columns=['first'], inplace=True)
+df['full_name'].str.split(' ')
+df['full_name'].str.split(' ', expand = True)
+df[['first', 'last']] = df['full_name'].str.split(" ", expand = True)
+df.drop(columns = ['full_name'], inplace = True)
+df.append([{'first': 'tony'}],ignore_index=True)
+df.append(df1)
+df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+pd.concat([df,pd.DataFrame(people1)])
+
+df.drop(index=2)
+df.drop(index=df[].index)
+df.drop(index=df[df['last'] == 'papu'].index)
+fil=df['last'] == 'papu'
+df.drop(index=df[fil].index)
+df.sort_values(by='last')
+df.sort_values(by='last', ascending=False)
+df.sort_values(by=['last','email'], ascending=False)
+df.sort_values(by=['last','email'], ascending=[False,True]) 
+df.sort_values(by=['last','email'], ascending=[False,True], inplace=True)
+df.sort_index()
+df['last'].sort_values()
+df['last'].head(50)
+df[['last','first']].head(50)
+df['phone'].sort_values()
+df['phone'].nlargest()
+df['phone'].nlargest(1)
+df.nlargest(10, 'phone')
+df.nsmallest(10, 'phone')
+----
+df['ConvertedCompYearly'].median()
+df.median()
+df.describe()
+df['ConvertedCompYearly'].count()
+df['ConvertedCompYearly'].value_counts()
+df['SOComm'].value_counts(normalize=True)
+df.groupby(['Country'])
+df.groupby(['Country']).get_group('Afghanistan')
+df.groupby(['Country'])['Employment'].value_counts()
+df.groupby(['Country'])['Employment'].value_counts().loc['India']
+country_grp['WorkExp'].median()
+country_grp['WorkExp'].median().loc['India']
+country_grp['WorkExp'].agg(['mean','median'])
+country_grp['WorkExp'].agg(['mean','median']).loc['India']
+country_grp['LanguageHaveWorkedWith'].apply(lambda x: x.str.contains('Python').sum())
+country_res = df['Country'].value_counts()
+country_with_python = country_grp['LanguageHaveWorkedWith'].apply(lambda x: x.str.contains('Python').sum())
+python_df.rename(columns={'country':'myCountry'})
+python_df['NoPeopleKnown'] = (python_df['']/python_df['']) * 100 === new Columns
+
+df['Employment'].value_counts() 
+fil = df['Country'] == 'India'
+df.loc[fil]
+df.loc[fil]['LanguageHaveWorkedWith']
+df.loc[fil]['LanguageHaveWorkedWith'].str.contains('Python')
+df.loc[fil]['LanguageHaveWorkedWith'].str.contains('Python').sum()
+df.loc[fil]['ConvertedCompYearly'].value_counts()
+
+
+df.dropna()
+df.dropna(axis='index', how='any')
+df.dropna(axis='index', how='all')
+df.dropna(axis='columns', how='all')
+df.dropna(axis='columns', how='any')
+df.dropna(axis='rows', how='any', subset=['email'])
+df.replace('NA', np.nan)
+df.replace('NA', np.nan, inplace=True)
+df.isna()
+df.fillna('Missing')
+df.fillna(0)
+df.dtypes
+df['phone'].mean()
+type(np.nan)
+df['last'] = df['last'].astype(str)
+df['last'].unique()
+df['last'].replace('nan', np.nan)
+df['last'].replace('nan', np.nan, inplace=True)
+ 
+
+df.loc[0,'Date']
+df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d %I-%p')
+df['Date']
+df.loc[0,'Date'].day_name()
+df['Date'].dt.day_name()
+df['DayOfWeek']=df.loc[0,'Date'].day_name()
+df['Date'].min()
+df['Date'].max()
+df.loc[df['Date'] > '2020']
+df.loc[(df['Date'] > '2020') & (df['Date'] < '2022')]
+df.loc[(df['Date'] > '2020') & (df['Date'] > pd.to_datetime('2020-01-01'))]
+df.set_index('Date',inplace=True) 
+highs = df['High'].resample('D'),max()
+%matplotlib inline
+df.resample('w').mean()
+df.resample('w').agg({'Closing':'mean', 'High':'median', 'low':'max', 'Volume':'sum'})
+highs.plot()
+
+df = pd.read_csv("D:\python-coding\data\survey_2022\survey_results_public.csv", index_col = 'Country')
+fil = (df['Country'] == 'India')
+india_df = df[fil]
+india_df.to_csv("D:\python-coding\data\survey_2022\survey_results_public_2.csv")
+india_df.to_csv("D:\python-coding\data\survey_2022\survey_results_public_2.tsv", sep='\t')
+india_df.to_excel("D:\python-coding\data\survey_2022\survey_results_public_2.xlsx")
+df1= pd.read_excel("D:\python-coding\data\survey_2022\survey_results_public_2.xlsx", index_col='mydata')
+india_df.to_json("D:\python-coding\data\survey_2022\survey_results_public_2.json") 
+india_df.to_json("D:\python-coding\data\survey_2022\survey_results_public_2.json", orient='records', lines=True)
+test = pd.read_json("D:\python-coding\data\survey_2022\survey_results_public_2.json", orient='records', lines=True)
+test.head()
+pip install SQLAlchemy
